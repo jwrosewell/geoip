@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script async src="https://cloud.51degrees.com/api/v4/AQRPh2TeZOxotqLs3Eg.js"></script>
+    </head>
+    <body>
+        <h1>51Degrees Cloud Example</h1>
+        <h2>Ip</h2>
+        <div id="htmlIp"></div>
+        <h2>Network</h2>
+        <div id="htmlNetwork"></div>
+        <h2>Location</h2>
+        <div id="htmlLocation"></div>
+        <hr/>
+        <div>
+            <button type="button" onclick="buttonClicked()">Use my location</button>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+        function addLocation(data) {
+            document.getElementById("htmlLocation").innerHTML = "";
+            addTextLocation("Town (by lat/lon): " + data.location["town"]);
+            addTextLocation("Country (by lat/lon): " + data.location["country"]);
+            addTextLocation("CountryCode (by lat/lon): " + data.location["countrycode"]);
+            addTextLocation("CountryCode3 (by lat/lon): " + data.location["countrycode3"]);
+            addTextLocation("TimeZoneOffset (by lat/lon): " + data.location["timezoneoffset"]);
+        }
+
+        window.onload = function() {
+            fod.complete(function (data) {
+                // Fetch the properties from the JSON response and write to the page.
+                addTextIp("Ipv6 (by IP): " + data.ip["ipv6"]);
+                addTextIp("Ip (by IP): " + data.ip["ip"]);
+                addTextIp("Latitude (by IP): " + data.ip["latitude"]);
+                addTextIp("AccuracyRadius (by IP): " + data.ip["accuracyradius"]);
+                addTextIp("Longitude (by IP): " + data.ip["longitude"]);
+                addTextIp("Shapes (by IP): " + data.ip["shapes"]);
+                addTextNetwork("Name: " + data.network["name"]);
+                addTextNetwork("Country: " + data.network["country"]);
+                addTextNetwork("Owner: " + data.network["owner"]);
+                addTextNetwork("IpRangeEnd: " + data.network["iprangeend"]);
+                addTextNetwork("IpRangeStart: " + data.network["iprangestart"]);
+                addLocation(data);
+            });
+        }
+
+        buttonClicked = function() {
+            fod.complete(function (data) {
+                addLocation(data);
+            }, 'location');
+        }
+    
+        addTextIp = function(text) {
+            document.getElementById("htmlIp").innerHTML+=text + "<br>";
+        }
+        addTextNetwork = function(text) {
+            document.getElementById("htmlNetwork").innerHTML+=text + "<br>";
+        }
+        addTextLocation = function(text) {
+            document.getElementById("htmlLocation").innerHTML+=text + "<br>";
+        }
+    </script>
+</html>
